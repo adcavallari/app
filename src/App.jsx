@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { SplashScreen } from './components/SplashScreen';
 import MainLayout from './layouts/MainLayout';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -13,17 +14,18 @@ import Bible from './pages/Bible';
 import Live from './pages/Live';
 import Devotional from './pages/Devotional';
 import Schedules from './pages/Schedules';
+import Chat from './pages/Chat';
+import Location from './pages/Location';
+import Announcements from './pages/Announments';
+import Admin from './pages/Admin';
+import Profile from './pages/Profile';
+import ForgotPassword from './pages/ForgotPassword';
 
 function AppContent() {
   const { user, loading } = useAuth();
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 dark:bg-[#09090b] text-indigo-500">
-        <Loader2 className="w-12 h-12 animate-spin mb-4" />
-        <p className="text-slate-500 dark:text-zinc-400 font-semibold animate-pulse tracking-wide">Iniciando Hub...</p>
-      </div>
-    );
+    return <SplashScreen />;
   }
 
   return (
@@ -35,6 +37,7 @@ function AppContent() {
           element={user ? <Navigate to="/dashboard" replace /> : <Login />} 
         />
         <Route path="register" element={<Register />} />
+        <Route path="forgot-password" element={<ForgotPassword />} />
         
         {/* Rotas Protegidas */}
         <Route 
@@ -49,6 +52,11 @@ function AppContent() {
           <Route path="live" element={<Live />} />
           <Route path="devotional" element={<Devotional />} />
           <Route path="schedules" element={<Schedules />} />
+          <Route path="chat" element={<Chat />} />
+          <Route path="location" element={<Location />} />
+          <Route path="announcements" element={<Announcements />} />
+          <Route path="admin" element={<Admin />} />  
+          <Route path="profile" element={<Profile />} />
         </Route>
       </Routes>
     </BrowserRouter>
